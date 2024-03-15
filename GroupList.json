@@ -1,0 +1,22 @@
+{
+  "administrator": {
+    "name": "administrator",
+    "owner": {
+      "id": 1,
+      "username": "admin"
+    },
+    "members": [
+      "admin"
+    ]
+  },
+  "user": {
+    "name": "user",
+    "owner": {
+      "id": 2,
+      "username": "user"
+    },
+    "members": [
+      "user"
+    ]
+  }
+}
