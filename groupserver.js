@@ -206,7 +206,7 @@ app.post('/addGroupMember', checkSession, (req, res) => {
 });
 
 
-//**********************************************************************************
+// ********************************************************************************** //
 // Function 7
 
 // Get all members of a group
@@ -231,9 +231,51 @@ app.get('/groupMembers/:groupName', checkSession, (req, res) => {
     res.json({members: group.members});
 });
 
+// ********************************************************************************** //
+
+// The following routes are used by the fileserver to fetch and modify the UserList and GroupList .json files
+app.get('/userList', (req, res) => {
+    fs.readFile('UserList.json', 'utf8', (err, data) => {
+        if (err) {
+            console.error('Error reading UserList.json:', err);
+            return res.status(500).json({error: 'Internal server error'});
+        }
+        const userList = JSON.parse(data);
+        res.json(userList);
+    });
+});
+
+// Route to serve GroupList.json
+app.get('/groupList', (req, res) => {
+    // Read GroupList.json from the local directory
+    fs.readFile('GroupList.json', 'utf8', (err, data) => {
+        if (err) {
+            console.error('Error reading GroupList.json:', err);
+            return res.status(500).json({error: 'Internal server error'});
+        }
+        const groupList = JSON.parse(data);
+        res.json(groupList);
+    });
+});
+
+// Update GroupList route
+app.post('/updateGroupList', (req, res) => {
+    try {
+        // Get updated GroupList data from request body
+        const updatedGroupList = req.body;
+
+        // Write updated GroupList data to GroupList.json file
+        fs.writeFileSync('GroupList.json', JSON.stringify(updatedGroupList, null, 2));
+
+        res.status(200).json({message: 'GroupList updated successfully'});
+    } catch (error) {
+        console.error('Error updating GroupList:', error);
+        res.status(500).json({error: 'Internal server error'});
+    }
+});
 
 // ----------------------------------------------------------------------------
-// You would add routes here for modularity
+
 // For Authentication
 app.use('/', AuthRoutes);
 

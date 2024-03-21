@@ -7,6 +7,9 @@
     },
     "members": [
       "admin"
+    ],
+    "files": [
+      "test.txt"
     ]
   },
   "user": {
