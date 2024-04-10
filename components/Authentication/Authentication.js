@@ -23,7 +23,7 @@ const checkSession = (req, res, next) => {
 
     try {
         // Verify the token using the secret key
-        const decoded = jwt.verify(token, 'your-secret-key'); // THIS IS WHAT ACTUALLY CREATES THE COOKIE
+        const decoded = jwt.verify(token, 'your-secret-key');
         // connect.sid is session cookie but token is the actual username + your-secret-key
 
         req.session.user = decoded.user;
